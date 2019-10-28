@@ -23,7 +23,7 @@ func calculatePi(iterations int) float64 {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	log.Print("Pi calculator received a request from", r.RemoteAddr, "for", r.URL)
+	log.Print("Pi calculator received a request from ", r.RemoteAddr, " for ", r.URL)
 	h := w.Header()
 	h.Set("Content-Type", "text/plain")
 	keys, ok := r.URL.Query()["iterations"]
@@ -51,6 +51,5 @@ func main() {
 		port = "8080"
 	}
 
-	//log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
-	http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
