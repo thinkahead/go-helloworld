@@ -26,15 +26,19 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	log.Print("Pi calculator received a request from", r.RemoteAddr, "for", r.URL)
 	h := w.Header()
 	h.Set("Content-Type", "text/plain")
-	if r.URL.Query().Get("iterations") != nil {
-		iterations, err := strconv.Atoi(r.URL.Query()["iterations"][0])
-		if err != nil {
-			fmt.Fprintf(w, "iterations parameter not valid\n")
-			return
-		}
-		fmt.Fprintf(w, "%.10f\n", calculatePi(iterations))
+	keys, ok := r.URL.Query()["iterations"]
+	if !ok || len(keys[0]) < 1 {
+		fmt.Fprintf(w, "iterations parameter missing\n")
+		fmt.Fprintf(w, "Go version: %s\n", runtime.Version())
+		return
 	}
-	fmt.Fprintf(w, "Go version: %s\n", runtime.Version())
+	iterations, err := strconv.Atoi(keys[0])
+	if err != nil {
+		fmt.Fprintf(w, "iterations parameter not valid\n")
+		fmt.Fprintf(w, "Go version: %s\n", runtime.Version())
+		return
+	}
+	fmt.Fprintf(w, "%.10f\n", calculatePi(iterations))
 }
 
 func main() {
