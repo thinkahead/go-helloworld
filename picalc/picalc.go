@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"runtime"
+	"strconv"
 )
 
 // Calculate pi using Gregory-Leibniz series:   (4/1) - (4/3) + (4/5) - (4/7) + (4/9) - (4/11) + (4/13) - (4/15) ...
@@ -25,7 +26,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	log.Print("Pi calculator received a request from", r.RemoteAddr, "for", r.URL)
 	h := w.Header()
 	h.Set("Content-Type", "text/plain")
-	if r.URL.Query().Get("iterations") {
+	if r.URL.Query().Get("iterations") != nil {
 		iterations, err := strconv.Atoi(r.URL.Query()["iterations"][0])
 		if err != nil {
 			fmt.Fprintf(w, "iterations parameter not valid\n")
