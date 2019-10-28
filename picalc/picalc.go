@@ -25,7 +25,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	log.Print("Pi calculator received a request from", r.RemoteAddr, "for", r.URL)
 	h := w.Header()
 	h.Set("Content-Type", "text/plain")
-	if r.URL.Query().get("iterations") {
+	if r.URL.Query().Get("iterations") {
 		iterations, err := strconv.Atoi(r.URL.Query()["iterations"][0])
 		if err != nil {
 			fmt.Fprintf(w, "iterations parameter not valid\n")
