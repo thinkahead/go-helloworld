@@ -9,40 +9,16 @@ import (
 	"strconv"
 )
 
-// Calculate pi using Gregory-Leibniz series:   (4/1) - (4/3) + (4/5) - (4/7) + (4/9) - (4/11) + (4/13) - (4/15) ...
-func calculatePi(iterations int) float64 {
-	var result float64 = 0.0
-	var sign float64 = 1.0
-	var denominator float64 = 1.0
-	for i := 0; i < iterations; i++ {
-		result = result + (sign * 4 / denominator)
-		denominator = denominator + 2
-		sign = -sign
-	}
-	return result
-}
-
 func handler(w http.ResponseWriter, r *http.Request) {
 	log.Print("Pi calculator received a request from ", r.RemoteAddr, " for ", r.URL)
 	h := w.Header()
 	h.Set("Content-Type", "text/plain")
-	keys, ok := r.URL.Query()["iterations"]
-	if !ok || len(keys[0]) < 1 {
-		fmt.Fprintf(w, "iterations parameter missing\n")
-		fmt.Fprintf(w, "Go version: %s\n", runtime.Version())
-		return
-	}
-	iterations, err := strconv.Atoi(keys[0])
-	if err != nil {
-		fmt.Fprintf(w, "iterations parameter not valid\n")
-		fmt.Fprintf(w, "Go version: %s\n", runtime.Version())
-		return
-	}
-	fmt.Fprintf(w, "%.10f\n", calculatePi(iterations))
+	fmt.Fprint(w, "Hello world!\n\n")
+	fmt.Fprintf(w, "Go version: %s\n", runtime.Version())
 }
 
 func main() {
-	log.Print("Pi calculator started.")
+	log.Print("Hello World started.")
 
 	http.HandleFunc("/", handler)
 
