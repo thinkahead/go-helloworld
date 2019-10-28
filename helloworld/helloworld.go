@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"runtime"
-	"strconv"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
